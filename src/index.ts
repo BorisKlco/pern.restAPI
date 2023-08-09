@@ -6,6 +6,8 @@ import compression from "compression";
 import cors from "cors";
 import dbConnect from "./db/connect";
 import router from "./router";
+// import createTable from "./db/createTable";
+// createTable();
 
 const pool = dbConnect();
 
