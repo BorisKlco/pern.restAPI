@@ -8,13 +8,5 @@ export default function dbConnect() {
     connectionString: PG_URL,
   });
 
-  pool
-    .connect()
-    .then(() => console.log("- Connected to the database"))
-    .catch((err) => {
-      console.error("DB connection error: ", err);
-      process.exit(1);
-    });
-
   return pool;
 }

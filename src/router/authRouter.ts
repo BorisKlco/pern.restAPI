@@ -1,5 +1,7 @@
 import express from "express";
 
+import { register } from "../controllers/auth";
+
 export default function (router: express.Router) {
-  router.post("/auth/register");
+  router.post("/auth/register", register);
 }
