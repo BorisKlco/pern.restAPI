@@ -16,7 +16,6 @@ app.use(
     credentials: true,
   })
 );
-
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -27,13 +26,10 @@ const pool = new Pool({
 
 const server = http.createServer(app);
 
-pool.query("SELECT NOW()", (err, res) => {
-  if (err) {
-    console.error("Error executing query", err);
-  } else {
-    console.log("Connected to PostgreSQL at:", res.rows[0].now);
-  }
-});
+pool
+  .connect()
+  .then(() => console.log("Connected to the database"))
+  .catch((err) => console.error("Database connection error", err));
 
 server.listen(8080, () => {
   console.log("Server running");
