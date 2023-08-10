@@ -15,5 +15,7 @@ export default async function createTable() {
     }
   }
 
+  console.log("Tables created");
+
   createTable();
 }

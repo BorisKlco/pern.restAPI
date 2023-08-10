@@ -13,7 +13,7 @@ const pool = dbConnect();
 
 pool
   .connect()
-  .then(() => console.log("- Connected to the database"))
+  .then(() => console.log("DB connection successful..."))
   .catch((err) => {
     console.error("DB connection error: ", err);
     process.exit(1);
@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 const server = http.createServer(app);
 
 server.listen(8080, () => {
-  console.log("Server running on 8080:");
+  console.log("Server up on 8080...");
 });
 
 app.use("/", router());

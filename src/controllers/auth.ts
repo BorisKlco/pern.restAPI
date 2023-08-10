@@ -1,20 +1,7 @@
 import express from "express";
 import dbConnect from "../db/connect";
 import { random, auth } from "../helpers";
-
-type UserDataType = {
-  id: number;
-  email: string;
-  username: string;
-  password: string;
-  salt: string;
-  sessiontoken: string | null;
-};
-
-type UserModelType = {
-  rowCount: number;
-  rows: UserDataType[];
-};
+import { UserModelType, UserDataType } from "types";
 
 export async function login(req: express.Request, res: express.Response) {
   try {
