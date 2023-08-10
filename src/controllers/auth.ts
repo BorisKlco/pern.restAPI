@@ -7,11 +7,21 @@ export async function register(req: express.Request, res: express.Response) {
     const { username, password, email } = req.body;
     const pool = dbConnect();
 
+    //Check db for user
     if (!username || !password || !email) {
-      return res.sendStatus(400);
+      return res.status(400).send("Missing data");
     }
-    //if user exist
 
+    const checkIfUserExist = await pool.query(
+      "SELECT * from users WHERE email = $1",
+      [email]
+    );
+
+    if (checkIfUserExist.rowCount != 0) {
+      return res.status(409).send("Conflict: User exist");
+    }
+
+    //Create user
     const salt = random();
     const user = {
       user: username,
