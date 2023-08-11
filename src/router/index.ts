@@ -5,8 +5,11 @@ import getUsersRouter from "./getUsersRouter";
 const router = express.Router();
 
 export default function (): express.Router {
-  router.get("/", (req, res) => res.send("Hello"));
   authRouter(router);
   getUsersRouter(router);
+  // better safe than sorry 🤔
+  router.get("*", (req, res) => {
+    res.redirect("/");
+  });
   return router;
 }
