@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 
 import axios from "axios";
 
@@ -12,8 +13,8 @@ export default function Login() {
     },
   });
 
-  if (mutation.isSuccess) {
-    console.log(mutation);
+  if (Cookies.get("AYAYA")) {
+    return <Navigate to="/" />;
   }
 
   return (
@@ -29,8 +30,6 @@ export default function Login() {
               password: formData.get("password") ?? "",
             };
             mutation.mutate(obj);
-
-            // setLogin(obj);
           }}
         >
           <label htmlFor="email">
@@ -43,7 +42,6 @@ export default function Login() {
         </form>
       </div>
       {mutation.isLoading && "Loading..."}
-      {mutation.isSuccess && "Done..."}
       {mutation.isError && mutation.error.response["data"]}
       <h2>
         <Link to="/">Go to HomePage Page</Link>
