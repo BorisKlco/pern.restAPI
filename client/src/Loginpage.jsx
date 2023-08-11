@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 import axios from "axios";
 
-export default function Login() {
+export default function Loginpage() {
   const mutation = useMutation({
     mutationFn: (formData) => {
       return axios.post("http://localhost:8080/auth/login", formData, {
