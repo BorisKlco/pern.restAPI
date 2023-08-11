@@ -40,6 +40,7 @@ export async function login(req: express.Request, res: express.Response) {
 
     if (updateUserTokenRecord.rowCount) {
       res.cookie("AYAYA", createSessionToken);
+      res.cookie("username", user.username);
       return res.status(200).send("Mischief Managed!");
     }
 

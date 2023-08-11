@@ -19,7 +19,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <header>
           <Link to="/">
-            <h1>pern.restAPI React Client</h1>
+            <h1 className="text-2xl">pern.restAPI - React Client</h1>
           </Link>
         </header>
         <Routes>

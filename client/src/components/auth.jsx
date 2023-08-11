@@ -3,22 +3,28 @@ import Cookies from "js-cookie";
 
 function logout() {
   Cookies.remove("AYAYA");
+  Cookies.remove("username");
   window.location.reload();
 }
 
 export default function Auth() {
   return (
     <>
-      <div className="flex flex-col gap-2 border border-gray">
-        <div className="my-4 mx-2">
+      <div className="border border-gray-400 rounded my-2 mx-2">
+        <div className="">
           {Cookies.get("AYAYA") && (
-            <button className="rounded bg-gray py-2 px-4" onClick={logout}>
-              Odhlasit
+            <button
+              className="rounded mx-auto w-full py-2 px-4"
+              onClick={logout}
+            >
+              Logout
             </button>
           )}
           {!Cookies.get("AYAYA") && (
-            <Link className="rounded bg-gray py-2 px-4" to="/login">
-              Go to Login
+            <Link to="/login">
+              <button className="rounded mx-auto w-full py-2 px-4">
+                Login
+              </button>
             </Link>
           )}
         </div>
