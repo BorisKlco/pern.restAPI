@@ -1,22 +1,17 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import Login from "./Login";
+import Homepage from "./Homepage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
-      cacheTime: Infinity,
+      staleTime: false,
+      cacheTime: false,
     },
   },
 });
-
-function test() {
-  return <h2>test Page</h2>;
-}
-function test2() {
-  return <h2>test Page</h2>;
-}
 
 const App = () => {
   return (
@@ -28,8 +23,8 @@ const App = () => {
           </Link>
         </header>
         <Routes>
-          <Route path="/" element={test} />
-          <Route path="/test" element={test2} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </QueryClientProvider>
     </BrowserRouter>
