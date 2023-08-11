@@ -1,5 +1,6 @@
 import express from "express";
 import dbConnect from "../db/connect";
+const pool = dbConnect();
 
 export async function isAuth(
   req: express.Request,
@@ -12,8 +13,6 @@ export async function isAuth(
       console.error(new Date(), "MWerror - Missing cookie");
       return res.sendStatus(401);
     }
-
-    const pool = dbConnect();
 
     const checkForValidToken = await pool.query(
       "SELECT * from users WHERE sessiontoken = $1",

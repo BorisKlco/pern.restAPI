@@ -2,11 +2,11 @@ import express from "express";
 import dbConnect from "../db/connect";
 import { random, auth } from "../helpers";
 import { UserModelType, UserDataType } from "types";
+const pool = dbConnect();
 
 export async function login(req: express.Request, res: express.Response) {
   try {
     const { email, password } = req.body;
-    const pool = dbConnect();
 
     //Check db for user
     if (!password || !email) {
@@ -54,7 +54,6 @@ export async function login(req: express.Request, res: express.Response) {
 export async function register(req: express.Request, res: express.Response) {
   try {
     const { username, password, email } = req.body;
-    const pool = dbConnect();
 
     //Check db for user
     if (!username || !password || !email) {

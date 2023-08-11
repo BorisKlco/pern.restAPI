@@ -1,9 +1,8 @@
 import express from "express";
 import dbConnect from "../db/connect";
+const pool = dbConnect();
 
 export async function getAllUsers(req: express.Request, res: express.Response) {
-  const pool = dbConnect();
-
   const fetchUsers = await pool.query("SELECT * from users");
 
   return res.status(200).json(fetchUsers.rows);
@@ -18,7 +17,6 @@ export async function deleteYourself(
     return res.sendStatus(403);
   }
 
-  const pool = dbConnect();
   const deleteMyself = await pool.query(
     "DELETE FROM users WHERE sessiontoken = $1",
     [getUserToken]
@@ -32,7 +30,6 @@ export async function deleteYourself(
 }
 
 export async function deleteUser(req: express.Request, res: express.Response) {
-  const pool = dbConnect();
   const { id } = req.params;
 
   const deleteUserById = await pool.query("DELETE FROM users WHERE id = $1", [
