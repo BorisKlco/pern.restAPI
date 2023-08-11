@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^4.29.13",
+    "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.13.0"
