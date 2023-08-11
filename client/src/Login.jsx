@@ -1,33 +1,20 @@
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 
-async function postLogin({ queryKey }) {
-  console.log("hi");
-  const loginInfo = queryKey[1];
-
-  const res = await fetch("http://localhost:8080/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(loginInfo),
-  });
-
-  if (!res.ok) {
-    throw new Error("fetch not ok");
-  }
-
-  console.log(res.headers);
-  return res;
-}
+import axios from "axios";
 
 export default function Login() {
-  const [login, setLogin] = useState();
-  const submitLogin = useQuery(["loginData", login], postLogin, {
-    enabled: !!login,
-    refetchOnWindowFocus: false,
+  const mutation = useMutation({
+    mutationFn: (formData) => {
+      return axios.post("http://localhost:8080/auth/login", formData, {
+        withCredentials: true,
+      });
+    },
   });
+
+  if (mutation.isSuccess) {
+    console.log(mutation);
+  }
 
   return (
     <>
@@ -41,7 +28,9 @@ export default function Login() {
               email: formData.get("email") ?? "",
               password: formData.get("password") ?? "",
             };
-            setLogin(obj);
+            mutation.mutate(obj);
+
+            // setLogin(obj);
           }}
         >
           <label htmlFor="email">
@@ -53,7 +42,9 @@ export default function Login() {
           <button>Submit</button>
         </form>
       </div>
-      {submitLogin.isFetching && "Loading..."}
+      {mutation.isLoading && "Loading..."}
+      {mutation.isSuccess && "Done..."}
+      {mutation.isError && mutation.error.response["data"]}
       <h2>
         <Link to="/">Go to HomePage Page</Link>
       </h2>
