@@ -1,8 +1,7 @@
 import express from "express";
-import dbConnect from "../db/connect";
 import { random, auth } from "../helpers";
 import { UserModelType, UserDataType } from "types";
-const pool = dbConnect();
+import { pool } from "../db/connect";
 
 export async function login(req: express.Request, res: express.Response) {
   try {

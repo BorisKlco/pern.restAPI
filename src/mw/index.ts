@@ -1,6 +1,5 @@
 import express from "express";
-import dbConnect from "../db/connect";
-const pool = dbConnect();
+import { pool } from "../db/connect";
 
 export async function isAuth(
   req: express.Request,

@@ -4,21 +4,10 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
-import dbConnect from "./db/connect";
 import router from "./router";
 import path from "path";
 // import createTable from "./db/createTable";
 // createTable();
-
-const pool = dbConnect();
-
-pool
-  .connect()
-  .then(() => console.log("DB connection successful..."))
-  .catch((err) => {
-    console.error("DB connection error: ", err);
-    process.exit(1);
-  });
 
 const app = express();
 

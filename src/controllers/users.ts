@@ -1,6 +1,5 @@
 import express from "express";
-import dbConnect from "../db/connect";
-const pool = dbConnect();
+import { pool } from "../db/connect";
 
 export async function getAllUsers(req: express.Request, res: express.Response) {
   const fetchUsers = await pool.query("SELECT * from users");
