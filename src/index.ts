@@ -6,6 +6,7 @@ import compression from "compression";
 import cors from "cors";
 import dbConnect from "./db/connect";
 import router from "./router";
+import path from "path";
 // import createTable from "./db/createTable";
 // createTable();
 
@@ -29,6 +30,7 @@ app.use(
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use("/", express.static(path.join(__dirname, "public")));
 
 const server = http.createServer(app);
 
