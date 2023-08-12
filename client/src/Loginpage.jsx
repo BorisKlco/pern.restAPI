@@ -20,6 +20,10 @@ export default function Loginpage() {
     return <Navigate to="/" />;
   }
 
+  if (mutation.isError) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <>
       <div>
@@ -64,7 +68,10 @@ export default function Loginpage() {
             {mutation.isError && mutation.error.response["data"]}
           </p>
           {mutation.isLoading ? (
-            <button className="animate-pulse mx-auto w-[50%] border border-black rounded disabled">
+            <button
+              disabled
+              className="animate-pulse mx-auto w-[50%] border border-black rounded"
+            >
               Loading
             </button>
           ) : (

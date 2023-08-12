@@ -79,6 +79,17 @@ export default function Users() {
           ))}
         </tbody>
       </table>
+
+      <div className="">
+        <button
+          disabled={deleteList.length < 1}
+          className={`mx-auto bg-gray-200 w-full py-2 px-4 hover:bg-gray-400 ${
+            deleteList.length < 1 && "bg-gray-100 text-gray-200"
+          }`}
+        >
+          Delete
+        </button>
+      </div>
     </>
   );
 }

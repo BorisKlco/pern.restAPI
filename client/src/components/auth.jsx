@@ -10,7 +10,7 @@ function logout() {
 export default function Auth() {
   return (
     <>
-      <div className="border border-gray-400 rounded my-4 mx-2">
+      <div className="border border-gray-400 my-4">
         <div className="">
           {Cookies.get("AYAYA") && (
             <button

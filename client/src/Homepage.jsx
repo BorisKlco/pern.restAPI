@@ -11,8 +11,8 @@ export default function Homepage() {
           Wellcum {Cookies.get("username") && Cookies.get("username")}
         </h1>
         {Cookies.get("username") && <Users />}
-        <Auth />
       </div>
+      <Auth />
     </>
   );
 }
