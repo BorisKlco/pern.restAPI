@@ -1,5 +1,5 @@
 import Auth from "./components/auth";
-import Users from "./components/users";
+import Users from "./components/users/users";
 
 import Cookies from "js-cookie";
 

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import RowItem from "./RowItem";
+import LoadingUsers from "./loadingUsers";
 
 export default function Users() {
-  const { status, data, error } = useQuery({
+  const fetchUsers = useQuery({
     queryKey: ["users"],
     queryFn: () =>
       axios
@@ -13,15 +13,14 @@ export default function Users() {
         .then((res) => res.data),
   });
 
-  if (status === "loading") {
-    return <span>Loading...</span>;
+  if (fetchUsers.status === "loading") {
+    return <LoadingUsers />;
   }
 
-  if (status === "error") {
-    return <span>Error: {error.message}</span>;
+  if (fetchUsers.status === "error") {
+    return <span>Error: {fetchUsers.error.message}</span>;
   }
 
-  // also status === 'success', but "else" logic works, too
   return (
     <>
       <table className="w-full text-sm text-left text-white">
@@ -42,8 +41,20 @@ export default function Users() {
           </tr>
         </thead>
         <tbody>
-          {data.map((user) => (
-            <RowItem key={user.id} props={user} />
+          {fetchUsers.data.map((user) => (
+            <tr
+              key={user.id}
+              className="bg-gray-600 border-b border-gray-400 text-gray-400 hover:text-white"
+            >
+              <th className="px-4 py-1 truncate bg-gray-500 w-[6rem]">
+                {user.username}
+              </th>
+              <td className="px-6 py-1 w-[8rem]">{user.email}</td>
+              <td className="px-6 py-1 truncate bg-gray-500 w-[4rem]">Edit</td>
+              <td className="text-center py-1 truncate w-[2rem]">
+                <input type="checkbox" name="" id="" value={user.id} />
+              </td>
+            </tr>
           ))}
         </tbody>
       </table>
