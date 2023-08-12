@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import LoadingUsers from "./loadingUsers";
 
 export default function Users() {
+  const [deleteList, setDeleteList] = useState([]);
+
   const fetchUsers = useQuery({
     queryKey: ["users"],
     queryFn: () =>
@@ -12,6 +15,17 @@ export default function Users() {
         })
         .then((res) => res.data),
   });
+
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setDeleteList([...deleteList, value]);
+      console.log(deleteList);
+    } else {
+      const removeValue = deleteList.filter((item) => item !== value);
+      setDeleteList([...removeValue]);
+    }
+  };
 
   if (fetchUsers.status === "loading") {
     return <LoadingUsers />;
@@ -52,7 +66,14 @@ export default function Users() {
               <td className="px-6 py-1 w-[8rem]">{user.email}</td>
               <td className="px-6 py-1 truncate bg-gray-500 w-[4rem]">Edit</td>
               <td className="text-center py-1 truncate w-[2rem]">
-                <input type="checkbox" name="" id="" value={user.id} />
+                <input
+                  checked={deleteList.includes(user.id.toString())}
+                  onChange={handleCheckboxChange}
+                  type="checkbox"
+                  name={user.id}
+                  id={user.id}
+                  value={user.id}
+                />
               </td>
             </tr>
           ))}

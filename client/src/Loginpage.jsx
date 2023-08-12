@@ -64,7 +64,7 @@ export default function Loginpage() {
             {mutation.isError && mutation.error.response["data"]}
           </p>
           {mutation.isLoading ? (
-            <button className="animate-pulse mx-auto w-[50%] border border-black rounded">
+            <button className="animate-pulse mx-auto w-[50%] border border-black rounded disabled">
               Loading
             </button>
           ) : (
