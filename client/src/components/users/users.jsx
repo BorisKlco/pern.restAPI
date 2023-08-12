@@ -1,13 +1,21 @@
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import LoadingUsers from "./loadingUsers";
 
 export default function Users() {
   const [deleteList, setDeleteList] = useState([]);
 
+  const mutation = useMutation({
+    mutationFn: (userList) => {
+      return axios.post("http://localhost:8080/delete", userList, {
+        withCredentials: true,
+      });
+    },
+  });
+
   const fetchUsers = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", mutation.isSuccess],
     queryFn: () =>
       axios
         .get("http://localhost:8080/users", {
@@ -24,6 +32,16 @@ export default function Users() {
     } else {
       const removeValue = deleteList.filter((item) => item !== value);
       setDeleteList([...removeValue]);
+    }
+  };
+
+  const handleDelete = () => {
+    const userList = { users: deleteList };
+
+    mutation.mutate(userList);
+    if (mutation.isSuccess) {
+      setDeleteList([]);
+      console.log(mutation.data.data);
     }
   };
 
@@ -55,33 +73,37 @@ export default function Users() {
           </tr>
         </thead>
         <tbody>
-          {fetchUsers.data.map((user) => (
-            <tr
-              key={user.id}
-              className="bg-gray-600 border-b border-gray-400 text-gray-400 hover:text-white"
-            >
-              <th className="px-4 py-1 truncate bg-gray-500 w-[6rem]">
-                {user.username}
-              </th>
-              <td className="px-6 py-1 w-[8rem]">{user.email}</td>
-              <td className="px-6 py-1 truncate bg-gray-500 w-[4rem]">Edit</td>
-              <td className="text-center py-1 truncate w-[2rem]">
-                <input
-                  checked={deleteList.includes(user.id.toString())}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  name={user.id}
-                  id={user.id}
-                  value={user.id}
-                />
-              </td>
-            </tr>
-          ))}
+          {fetchUsers.isFetched &&
+            fetchUsers.data.map((user) => (
+              <tr
+                key={user.id}
+                className="bg-gray-600 border-b border-gray-400 text-gray-400 hover:text-white"
+              >
+                <th className="px-4 py-1 truncate bg-gray-500 w-[6rem]">
+                  {user.username}
+                </th>
+                <td className="px-6 py-1 w-[8rem]">{user.email}</td>
+                <td className="px-6 py-1 truncate bg-gray-500 w-[4rem]">
+                  Edit
+                </td>
+                <td className="text-center py-1 truncate w-[2rem]">
+                  <input
+                    checked={deleteList.includes(user.id.toString())}
+                    onChange={handleCheckboxChange}
+                    type="checkbox"
+                    name={user.id}
+                    id={user.id}
+                    value={user.id}
+                  />
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
 
       <div className="">
         <button
+          onClick={handleDelete}
           disabled={deleteList.length < 1}
           className={`mx-auto bg-gray-200 w-full py-2 px-4 hover:bg-gray-400 ${
             deleteList.length < 1 && "bg-gray-100 text-gray-200"

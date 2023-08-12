@@ -29,15 +29,17 @@ export async function deleteYourself(
 }
 
 export async function deleteUser(req: express.Request, res: express.Response) {
-  const { id } = req.params;
+  const { users } = req.body;
 
-  const deleteUserById = await pool.query("DELETE FROM users WHERE id = $1", [
-    id,
-  ]);
+  const deleteUsers = await pool.query(
+    "DELETE FROM users WHERE id = ANY($1::int[])",
+    [users]
+  );
 
-  if (deleteUserById.rowCount != 0) {
-    return res.status(200).send(`User by ID ${id} was deleted...`);
+  if (deleteUsers.rowCount != 0) {
+    console.log("Users:", users, "deleted.");
+    return res.status(200).send(`Users was deleted...`);
   }
 
-  return res.status(404).send("User ID doesnt exist...");
+  return res.status(404).send("Users ID doesnt exist...");
 }

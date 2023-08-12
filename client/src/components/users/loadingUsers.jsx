@@ -18,7 +18,7 @@ export default function LoadingUsers() {
         </tr>
       </thead>
       <tbody>
-        {Array.from({ length: 12 }, (item, i) => (
+        {Array.from({ length: 4 }, (item, i) => (
           <tr
             key={i}
             className="animate-pulse bg-gray-600 border-b border-gray-400 text-gray-400 hover:text-white"
