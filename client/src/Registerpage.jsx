@@ -4,10 +4,10 @@ import Cookies from "js-cookie";
 
 import axios from "axios";
 
-export default function Loginpage() {
+export default function Registerpage() {
   const mutation = useMutation({
     mutationFn: (formData) => {
-      return axios.post("http://localhost:8080/auth/login", formData, {
+      return axios.post("http://localhost:8080/auth/register", formData, {
         withCredentials: true,
       });
     },
@@ -15,6 +15,10 @@ export default function Loginpage() {
 
   if (Cookies.get("AYAYA")) {
     return <Navigate to="/" />;
+  }
+
+  if (mutation.isSuccess) {
+    console.log(mutation);
   }
 
   return (
@@ -26,12 +30,23 @@ export default function Loginpage() {
             e.preventDefault();
             const formData = new FormData(e.target);
             const obj = {
+              username: formData.get("username") ?? "",
               email: formData.get("email") ?? "",
               password: formData.get("password") ?? "",
             };
             mutation.mutate(obj);
           }}
         >
+          <div className="flex gap-2 justify-between">
+            <label className="font-bold" htmlFor="username">
+              Nick:
+            </label>
+            <input
+              className="px-2 outline-none focus:underline"
+              type="text"
+              name="username"
+            />
+          </div>
           <div className="flex gap-2 justify-between">
             <label className="font-bold" htmlFor="email">
               Email:
@@ -43,7 +58,7 @@ export default function Loginpage() {
             />
           </div>
 
-          <div className="flex gap-2 justify-between">
+          <div className="flex gap-2 justify-between mb-2">
             <label className="font-bold" htmlFor="password">
               Password:
             </label>
@@ -53,6 +68,10 @@ export default function Loginpage() {
               name="password"
             />
           </div>
+          <p className="mx-auto text-green-400 font-bold">
+            {mutation.isSuccess &&
+              `User "${mutation.data.data["username"]}" created...`}
+          </p>
           <p className="mx-auto text-red-400 font-bold">
             {mutation.isError && mutation.error.response["data"]}
           </p>
@@ -68,8 +87,8 @@ export default function Loginpage() {
         </form>
       </div>
       <div className="flex justify-between">
-        <Link className="hover:underline" to="/register">
-          Register
+        <Link className="hover:underline" to="/login">
+          Login
         </Link>
         <Link className="hover:underline" to="/">
           Homepage

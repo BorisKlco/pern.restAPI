@@ -10,22 +10,29 @@ function logout() {
 export default function Auth() {
   return (
     <>
-      <div className="border border-gray-400 rounded my-2 mx-2">
+      <div className="border border-gray-400 rounded my-4 mx-2">
         <div className="">
           {Cookies.get("AYAYA") && (
             <button
-              className="rounded mx-auto w-full py-2 px-4"
+              className="mx-auto bg-gray-100 w-full py-2 px-4 hover:bg-gray-200"
               onClick={logout}
             >
               Logout
             </button>
           )}
           {!Cookies.get("AYAYA") && (
-            <Link to="/login">
-              <button className="rounded mx-auto w-full py-2 px-4">
-                Login
-              </button>
-            </Link>
+            <>
+              <Link to="/login">
+                <button className="mx-auto bg-gray-100 border-b w-full py-2 px-4 hover:bg-gray-200">
+                  Login
+                </button>
+              </Link>
+              <Link to="/register">
+                <button className="mx-auto bg-gray-100 w-full py-2 px-4 hover:bg-gray-200">
+                  Register
+                </button>
+              </Link>
+            </>
           )}
         </div>
       </div>
