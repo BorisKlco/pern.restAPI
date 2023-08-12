@@ -1,10 +1,13 @@
 import { Link, Navigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import Cookies from "js-cookie";
 
 import axios from "axios";
 
 export default function Loginpage() {
+  const [user, setUser] = useState("user@user");
+  const [password, setPassword] = useState("user");
   const mutation = useMutation({
     mutationFn: (formData) => {
       return axios.post("http://localhost:8080/auth/login", formData, {
@@ -40,6 +43,8 @@ export default function Loginpage() {
               className="px-2 outline-none focus:underline"
               type="email"
               name="email"
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
             />
           </div>
 
@@ -51,6 +56,8 @@ export default function Loginpage() {
               className="px-2 outline-none focus:underline"
               type="password"
               name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <p className="mx-auto text-red-400 font-bold">
