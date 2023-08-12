@@ -6,8 +6,8 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 export default function Loginpage() {
-  const [user, setUser] = useState("user@user");
-  const [password, setPassword] = useState("user");
+  const [user, setUser] = useState("user@User");
+  const [password, setPassword] = useState("user@Useruser@Useruser@User");
   const mutation = useMutation({
     mutationFn: (formData) => {
       return axios.post("http://localhost:8080/auth/login", formData, {
