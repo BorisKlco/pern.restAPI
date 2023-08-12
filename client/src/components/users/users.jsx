@@ -5,6 +5,7 @@ import LoadingUsers from "./loadingUsers";
 
 export default function Users() {
   const [deleteList, setDeleteList] = useState([]);
+  const [holder, setHolder] = useState(12);
 
   const mutation = useMutation({
     mutationFn: (userList) => {
@@ -41,12 +42,13 @@ export default function Users() {
     mutation.mutate(userList);
     if (mutation.isSuccess) {
       setDeleteList([]);
-      console.log(mutation.data.data);
+      setHolder(fetchUsers.data.length);
     }
   };
 
   if (fetchUsers.status === "loading") {
-    return <LoadingUsers />;
+    console.log(holder);
+    return <LoadingUsers size={holder} />;
   }
 
   if (fetchUsers.status === "error") {
@@ -79,14 +81,16 @@ export default function Users() {
                 key={user.id}
                 className="bg-gray-600 border-b border-gray-400 text-gray-400 hover:text-white"
               >
-                <th className="px-4 py-1 truncate bg-gray-500 w-[6rem]">
+                <th className="px-4 py-1 truncate bg-gray-500 w-[6rem] max-w-[6rem]">
                   {user.username}
                 </th>
-                <td className="px-6 py-1 w-[8rem]">{user.email}</td>
-                <td className="px-6 py-1 truncate bg-gray-500 w-[4rem]">
+                <td className="px-6 py-1 truncate w-[8rem] max-w-[8rem]">
+                  {user.email}
+                </td>
+                <td className="text-center px-6 py-1 truncate bg-gray-500 w-[5rem] max-w-[5rem]">
                   Edit
                 </td>
-                <td className="text-center py-1 truncate w-[2rem]">
+                <td className="text-center py-1 truncate w-[2rem] max-w-[2rem]">
                   <input
                     checked={deleteList.includes(user.id.toString())}
                     onChange={handleCheckboxChange}
