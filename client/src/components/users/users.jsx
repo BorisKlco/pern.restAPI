@@ -29,7 +29,6 @@ export default function Users() {
     const { value, checked } = event.target;
     if (checked) {
       setDeleteList([...deleteList, value]);
-      console.log(deleteList);
     } else {
       const removeValue = deleteList.filter((item) => item !== value);
       setDeleteList([...removeValue]);

@@ -1,6 +1,6 @@
 import Auth from "./components/auth";
 import Users from "./components/users/users";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 
@@ -18,6 +18,17 @@ export default function Homepage() {
         withCredentials: true,
       });
     },
+  });
+
+  const fetchLogs = useQuery({
+    queryKey: ["logs", userLogs],
+    queryFn: () =>
+      axios
+        .get("http://localhost:8080/logs", {
+          withCredentials: true,
+        })
+        .then((res) => res.data),
+    enabled: !!userLogs,
   });
 
   const handleReq = () => {
@@ -44,12 +55,11 @@ export default function Homepage() {
   };
 
   const handleSliderValue = (e) => {
-    console.log(e.target.value);
     setSliderValue(+e.target.value);
   };
 
-  if (mutation.isSuccess) {
-    console.log(mutation);
+  if (fetchLogs.isSuccess) {
+    console.log(fetchLogs.data);
   }
 
   return (
@@ -115,7 +125,16 @@ export default function Homepage() {
                 </button>
               </div>
             )}
-            {userLogs && "Wo0oking 0n it! 👷‍♂️"}
+            {userLogs && (
+              <div className="text-left">
+                {fetchLogs.isSuccess &&
+                  fetchLogs.data.toReversed().map((log) => (
+                    <pre key={log.id}>
+                      {log.useraction} of {log.username} at {log.entry}
+                    </pre>
+                  ))}
+              </div>
+            )}
           </div>
         )}
       </div>
