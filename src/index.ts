@@ -6,8 +6,6 @@ import compression from "compression";
 import cors from "cors";
 import router from "./router";
 import path from "path";
-// import createTable from "./db/createTable";
-// createTable();
 
 const app = express();
 

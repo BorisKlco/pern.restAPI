@@ -1,10 +1,13 @@
+import express from "express";
 import fs from "fs";
-import dbConnect from "./connect";
+import { pool } from "./connect";
 
-export default async function createTable() {
-  const sqlFilePath = "db.sql";
+export async function addTableToDb(
+  req: express.Request,
+  res: express.Response
+) {
+  const sqlFilePath = "./src/db/db.sql";
   const sqlCreateTable = fs.readFileSync(sqlFilePath, "utf8");
-  const pool = dbConnect();
 
   async function createTable() {
     try {
@@ -15,7 +18,7 @@ export default async function createTable() {
     }
   }
 
-  console.log("Tables created");
-
   createTable();
+
+  return res.status(200).send("Table created");
 }

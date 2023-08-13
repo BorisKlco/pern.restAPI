@@ -6,8 +6,6 @@ import { isAuth } from "../mw";
 export default function (router: express.Router) {
   console.log("'/users' Routes loaded...");
   router.get("/users", isAuth, getAllUsers);
-  // router.post("/delete", isAuth, deleteYourself);
-  // router.post("/delete/:id", isAuth, deleteUser);
   router.post("/delete", isAuth, deleteUser);
   router.get("/create/:size", isAuth, createUsers);
 }
