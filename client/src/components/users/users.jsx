@@ -3,9 +3,9 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import LoadingUsers from "./loadingUsers";
 
-export default function Users() {
+export default function Users({ prop }) {
   const [deleteList, setDeleteList] = useState([]);
-  const [holder, setHolder] = useState(8);
+  const [holder, setHolder] = useState(prop);
 
   const mutation = useMutation({
     mutationFn: (userList) => {

@@ -78,12 +78,12 @@ export default function Registerpage() {
           {mutation.isLoading ? (
             <button
               disabled
-              className="animate-pulse mx-auto w-[50%] border border-black rounded"
+              className="animate-pulse mx-auto w-[50%] border border-black"
             >
               Loading
             </button>
           ) : (
-            <button className="mx-auto w-[50%] border border-gray-400 rounded hover:bg-gray-300">
+            <button className="mx-auto w-[50%] border border-gray-400 hover:bg-gray-300">
               Submit
             </button>
           )}
