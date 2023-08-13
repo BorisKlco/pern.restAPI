@@ -1,6 +1,6 @@
 import express from "express";
 
-import { getAllUsers, deleteYourself, deleteUser } from "../controllers/users";
+import { getAllUsers, createUsers, deleteUser } from "../controllers/users";
 import { isAuth } from "../mw";
 
 export default function (router: express.Router) {
@@ -9,4 +9,5 @@ export default function (router: express.Router) {
   // router.post("/delete", isAuth, deleteYourself);
   // router.post("/delete/:id", isAuth, deleteUser);
   router.post("/delete", isAuth, deleteUser);
+  router.get("/create/:size", isAuth, createUsers);
 }

@@ -1,10 +1,49 @@
 import express from "express";
 import { pool } from "../db/connect";
+import { randomString, random, auth } from "../helpers";
 
 export async function getAllUsers(req: express.Request, res: express.Response) {
   const fetchUsers = await pool.query("SELECT * from users");
 
   return res.status(200).json(fetchUsers.rows);
+}
+
+export async function createUsers(req: express.Request, res: express.Response) {
+  const { size } = req.params;
+  const usersList = [];
+  function Gimmy() {
+    return Math.floor(Math.random() * 6) + 4;
+  }
+
+  for (let i = 0; i < +size; i++) {
+    const salt = random();
+    const createRandomUser = {
+      username: randomString(Gimmy()),
+      email: randomString(Gimmy()) + "@" + randomString(Gimmy()),
+      password: auth(salt, randomString(Gimmy())),
+      salt: salt,
+    };
+
+    const addUsersToDb = await pool.query(
+      "INSERT INTO users (email, username, password, salt) VALUES ($1, $2, $3, $4) RETURNING *",
+      [
+        createRandomUser.email,
+        createRandomUser.username,
+        createRandomUser.password,
+        salt,
+      ]
+    );
+
+    if (addUsersToDb.rowCount === 0) {
+      return res.status(500).send("Something Wo0ong");
+    }
+
+    usersList.push(createRandomUser);
+  }
+
+  console.log("Random users created", usersList);
+
+  return res.status(200).json(usersList);
 }
 
 export async function deleteYourself(

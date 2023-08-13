@@ -12,3 +12,12 @@ export function auth(salt: string, pass: string) {
     .update(SECRET)
     .digest("hex");
 }
+
+export function randomString(size: number) {
+  if (size < 2) {
+    return crypto.randomBytes(4).toString("hex");
+  } else if (size > 20) {
+    return crypto.randomBytes(12).toString("hex");
+  }
+  return crypto.randomBytes(size / 2).toString("hex");
+}
