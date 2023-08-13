@@ -41,7 +41,7 @@ export async function createUsers(req: express.Request, res: express.Response) {
     usersList.push(createRandomUser);
   }
 
-  console.log("Random users created", usersList);
+  console.log("Random users created", usersList.length);
 
   return res.status(200).json(usersList);
 }
