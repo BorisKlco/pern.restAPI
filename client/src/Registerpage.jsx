@@ -76,7 +76,10 @@ export default function Registerpage() {
             {mutation.isError && mutation.error.response["data"]}
           </p>
           {mutation.isLoading ? (
-            <button className="animate-pulse mx-auto w-[50%] border border-black rounded">
+            <button
+              disabled
+              className="animate-pulse mx-auto w-[50%] border border-black rounded"
+            >
               Loading
             </button>
           ) : (
