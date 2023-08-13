@@ -65,8 +65,10 @@ export default function Homepage() {
   return (
     <>
       <div className="py-2 px-2 bg-gray-50 border border-black">
-        <h1 className="my-2 text-xl">
-          Wellcum {Cookies.get("username") && Cookies.get("username")}
+        <h1 className="my-2 text-xl text-center">
+          {Cookies.get("username")
+            ? `Hello ${Cookies.get("username")}`
+            : "Welcome"}
         </h1>
         {Cookies.get("username") && (
           <div>
