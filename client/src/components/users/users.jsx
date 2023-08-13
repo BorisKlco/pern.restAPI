@@ -3,9 +3,9 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import LoadingUsers from "./loadingUsers";
 
-export default function Users({ prop }) {
+export default function Users() {
   const [deleteList, setDeleteList] = useState([]);
-  const [holder, setHolder] = useState(prop);
+  const [holder, setHolder] = useState();
 
   const mutation = useMutation({
     mutationFn: (userList) => {
@@ -40,10 +40,8 @@ export default function Users({ prop }) {
     const userList = { users: deleteList };
 
     mutation.mutate(userList);
-    if (mutation.isSuccess) {
-      setDeleteList([]);
-      setHolder(fetchUsers.data.length);
-    }
+    setDeleteList([]);
+    setHolder(fetchUsers.data.length);
   };
 
   if (fetchUsers.status === "loading") {
@@ -104,17 +102,15 @@ export default function Users({ prop }) {
         </tbody>
       </table>
 
-      <div className="">
-        <button
-          onClick={handleDelete}
-          disabled={deleteList.length < 1}
-          className={`mx-auto bg-gray-200 w-full py-2 px-4 hover:bg-gray-300 ${
-            deleteList.length < 1 && "bg-gray-100 text-gray-200"
-          }`}
-        >
-          Delete
-        </button>
-      </div>
+      <button
+        onClick={handleDelete}
+        disabled={deleteList.length < 1}
+        className={`mx-auto bg-gray-200 w-full py-2 px-4 hover:bg-gray-300 ${
+          deleteList.length < 1 && "bg-gray-100 text-gray-200"
+        }`}
+      >
+        Delete
+      </button>
     </>
   );
 }

@@ -1,6 +1,6 @@
 import Auth from "./components/auth";
 import Users from "./components/users/users";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 
@@ -11,17 +11,6 @@ export default function Homepage() {
   const [createUser, setCreateUser] = useState(false);
   const [userLogs, setUserLogs] = useState(false);
   const [sliderValue, setSliderValue] = useState(6);
-  const [holder, setHolder] = useState(8);
-
-  const fetchUsers = useQuery({
-    queryKey: ["users", showUser],
-    queryFn: () =>
-      axios
-        .get("http://localhost:8080/users", {
-          withCredentials: true,
-        })
-        .then((res) => res.data),
-  });
 
   const mutation = useMutation({
     mutationFn: (number) => {
@@ -36,7 +25,6 @@ export default function Homepage() {
   };
 
   const handleUsers = () => {
-    setHolder(fetchUsers.data.length);
     mutation.reset();
     setUserLogs(false);
     setCreateUser(false);
@@ -98,7 +86,7 @@ export default function Homepage() {
                 User Logs
               </button>
             </div>
-            {showUser && <Users prop={holder} />}
+            {showUser && <Users />}
             {createUser && (
               <div className="mt-4 flex flex-col gap-4">
                 <h1 className="font-semibod text-lg">Create random users:</h1>
